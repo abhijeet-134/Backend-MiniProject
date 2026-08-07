@@ -2,6 +2,11 @@ const { faker } = require('@faker-js/faker');
 const mysql = require('mysql2');
 const express = require("express");
 const app = express();
+const path = require("path");
+
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/views"));
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -25,15 +30,15 @@ app.get("/", (req, res) => {
     try {
         connection.query(q, (err,result) => {
             if (err) throw err;
-            console.log(result[0]["count(*)"]);
-            res.send(result);
+            let count = result[0]["count(*)"];
+            res.render("home.ejs", {count});
         });
     } catch (err) {
         console.log(err);
         res.send("Some Error in DB...");
     }
+});
 
-})
 
 app.listen(8080 , () => {
     console.log("Server is listening on port 8080");
