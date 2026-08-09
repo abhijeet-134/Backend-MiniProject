@@ -99,7 +99,31 @@ app.patch("/user/:id", (req, res) => {
         res.send("Some Error in DB...");
     }
 
+});
+
+
+// Render a form  to Add New User 
+app.get("/user/new", (req,res) => {
+    res.render("newuser.ejs");
+});
+
+// To Add new User 
+app.post("/user/add", (req,res) => {
+    let { username, email, password} = req.body;
+    let id = faker.string.uuid();
+    let q3 = "INSERT INTO user VALUES(?, ?, ?, ?)";
+    let data = [
+        id,username,email,password
+    ];
+    connection.query(q3, data ,(err,result) => {
+    if (err) {
+    console.log(err);
+    return res.send("Database Error");
+    }
+    res.redirect("/user");
+    })
 })
+
 
 app.listen(8080 , () => {
     console.log("Server is listening on port 8080");
