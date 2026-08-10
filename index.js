@@ -132,7 +132,7 @@ app.delete("/user/:id", (req,res) => {
     try {
         connection.query(q4, (err,result) => {
             if (err) throw err;
-            res.redirect("/user");
+            res.redirect("/user"); 
         });
         } catch (err) {
         console.log(err);
@@ -167,5 +167,3 @@ app.listen(8080 , () => {
 // }
 
 // connection.end();
-
-
