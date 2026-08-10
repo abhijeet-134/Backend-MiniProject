@@ -125,6 +125,23 @@ app.post("/user/add", (req,res) => {
 })
 
 
+// // To Delete User
+app.delete("/user/:id", (req,res) => {
+    let { id } = req.params;
+    let q4 = `DELETE FROM user WHERE id='${id}'`;
+    try {
+        connection.query(q4, (err,result) => {
+            if (err) throw err;
+            res.redirect("/user");
+        });
+        } catch (err) {
+        console.log(err);
+        res.send("Some Error in DB...");
+    }
+});
+
+
+
 app.listen(8080 , () => {
     console.log("Server is listening on port 8080");
 });
